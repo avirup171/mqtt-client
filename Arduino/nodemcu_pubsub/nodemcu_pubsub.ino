@@ -3,7 +3,7 @@
 #include <WiFiManager.h>          //https://github.com/tzapu/WiFiManager WiFi Configuration Magic
 
 
-const char* mqtt_server = "<iot server url>";
+const char* mqtt_server = "mqtt.blackspektro.com";
 WiFiClient espClient;
 PubSubClient client(espClient);
 long lastMsg = 0;
@@ -39,13 +39,13 @@ void reconnect()
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str())) 
+    if (client.connect(clientId.c_str(),"bsmqtt","blackspektro2019")) 
     {
       Serial.println("connected");
       // Once connected, publish an announcement...
-      client.publish("<OUT TOPIC>", "hello world");
+      client.publish("tester", "hello world");
       // ... and resubscribe
-      client.subscribe("<SUBSCRIPTION TOPIC>");
+      client.subscribe("accon");
     }
     else 
     {
@@ -61,7 +61,7 @@ void reconnect()
 
 void setup() 
 {
-  
+  Serial.begin(9600);
   WiFiManager wifiManager;
   //1wifiManager.resetSettings(); 
   wifiManager.autoConnect("NodeMCU");
@@ -79,5 +79,5 @@ void loop()
   {
     reconnect();
   }
-
+  client.loop();
 }
