@@ -39,7 +39,7 @@ void reconnect()
     String clientId = "ESP8266Client-";
     clientId += String(random(0xffff), HEX);
     // Attempt to connect
-    if (client.connect(clientId.c_str(),"bsmqtt","blackspektro2019")) 
+    if (client.connect(clientId.c_str(),"uid","password")) 
     {
       Serial.println("connected");
       // Once connected, publish an announcement...
